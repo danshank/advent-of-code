@@ -1,0 +1,6 @@
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\bin\Debug\netstandard2.0\Library.deps.json
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\bin\Debug\netstandard2.0\Library.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\bin\Debug\netstandard2.0\Library.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\obj\Debug\netstandard2.0\Library.fsprojAssemblyReference.cache
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\obj\Debug\netstandard2.0\Library.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Library\obj\Debug\netstandard2.0\Library.pdb

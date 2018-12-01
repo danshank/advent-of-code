@@ -1,0 +1,11 @@
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\App.deps.json
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\App.runtimeconfig.json
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\App.runtimeconfig.dev.json
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\App.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\App.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\Library.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\App\bin\Debug\netcoreapp2.0\Library.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\App\obj\Debug\netcoreapp2.0\App.fsprojAssemblyReference.cache
+C:\Users\dshank\Source\Repos\AoC2018\src\App\obj\Debug\netcoreapp2.0\App.fsproj.CopyComplete
+C:\Users\dshank\Source\Repos\AoC2018\src\App\obj\Debug\netcoreapp2.0\App.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\App\obj\Debug\netcoreapp2.0\App.pdb
