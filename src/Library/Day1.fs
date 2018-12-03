@@ -23,9 +23,6 @@ module Day1 =
         | true -> FrequencyIsReached freq
         | false -> frequencies.Add(freq, true) |> FrequenciesVisited
 
-    let calcFreq freq next =
-        freq + next
-
     let rec calcSecondVisitedFreq (currentFreq: int) (visited : Map<int,bool>) (changes : int list) (changesCopy : int list) : int =
         match changes with
         | [] -> 0
@@ -40,16 +37,12 @@ module Day1 =
                 | _ -> calcSecondVisitedFreq nextFreq newVisited rest changesCopy
 
     let part2 input =
-        processInput input
-        |> calcSecondVisitedFreq 0 Map.empty<int,bool>
+        let intlist = processInput input
+        calcSecondVisitedFreq 0 Map.empty<int,bool> intlist intlist
 
     let result1 = part1 "+1, +1, +1"
     let result2 = part1 "+1, +1, -2"
     let result3 = part1 "-1, -2, -3"
-    let result4 = part2 "+1, +1, +1"
-    let result5 = part2 "+1, +1, -2"
-    let result6 = part2 "-1, -2, -3"
-
     let inputstr = "+9
 +1
 -11
@@ -1079,8 +1072,5 @@ module Day1 =
     printfn "%i" result1
     printfn "%i" result2
     printfn "%i" result3
-    printfn "%i" result4
-    printfn "%i" result5
-    printfn "%i" result6
     printfn "%i" result7
     printfn "%i" result8
