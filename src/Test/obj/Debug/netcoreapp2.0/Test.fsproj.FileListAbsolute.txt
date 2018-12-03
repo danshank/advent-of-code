@@ -1,0 +1,14 @@
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\NUnit3.TestAdapter.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\NUnit3.TestAdapter.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\nunit.engine.netstandard.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Test.deps.json
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Test.runtimeconfig.json
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Test.runtimeconfig.dev.json
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Test.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Test.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Library.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\bin\Debug\netcoreapp2.0\Library.pdb
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\obj\Debug\netcoreapp2.0\Test.fsprojAssemblyReference.cache
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\obj\Debug\netcoreapp2.0\Test.fsproj.CopyComplete
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\obj\Debug\netcoreapp2.0\Test.dll
+C:\Users\dshank\Source\Repos\AoC2018\src\Test\obj\Debug\netcoreapp2.0\Test.pdb

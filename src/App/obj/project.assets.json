@@ -252,7 +252,7 @@
       },
       "Library/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
           "FSharp.Core": "4.3.4"
         },
