@@ -5,61 +5,48 @@ module Day2 =
 
     let processInput (input : string) =
         let values = input.Split([|", "; "\n"|], StringSplitOptions.RemoveEmptyEntries)
-        values |> Seq.toArray       
-    
-    type IdType =
-    | HasPair
-    | HasTriplet
-    | HasBoth
-    | HasNeither
+        values |> Seq.toList    
 
-    let countChar (counts : Map<char,int>) (c : char) =
-        match counts.ContainsKey c with
-        | true -> counts.Add(c, counts.Item(c) + 1)
-        | false -> counts.Add(c, 1)
+    type ErrorState =
+    | Continue0
+    | Continue1
+    | Exit
 
-    let getIdType (counts : Map<char,int>) : IdType =
-        let values = counts 
-                    |> Map.toSeq 
-                    |> Seq.map(fun (k, v) -> v)
-        let hasPair = Seq.contains(2) values
-        let hasTriplet = Seq.contains(3) values                        
-        match (hasPair, hasTriplet) with
-        | (true, true) -> HasBoth
-        | (true, false) -> HasPair
-        | (false, true) -> HasTriplet
-        | (false, false) -> HasNeither          
+    type IsOffByOne =
+    | FoundIdentical of string
+    | FoundOffByOne of string*string
+    | DidNotFind
+
+    let rec CheckListForOffByOne id check =
+        let tupToInt (x,y) =
+            match x=y with
+            | true -> 0
+            | false -> 1
+
+        match check with
+        | [] -> DidNotFind
+        | first::rest ->
+            let isEqual = id |> Seq.zip first |> Seq.sumBy(tupToInt)
+            match isEqual with
+            | 0 -> FoundIdentical id
+            | 1 -> (id,first) |> FoundOffByOne
+            | _ -> CheckListForOffByOne id rest
 
 
-    let identifyId (id : string) : IdType =
-        id
-        |> Seq.fold(countChar) Map.empty<char,int>
-        |> getIdType
-
-    let updateTypeCount ((x,y) : (int*int)) (idType : IdType) : (int*int) =
-        match idType with
-        | HasBoth -> (x+1, y+1)
-        | HasPair -> (x+1, y)
-        | HasTriplet -> (x, y+1)
-        | HasNeither -> (x,y)
-    
-    let part1 input =                 
-        let ids = processInput input
-        let (pairs,triplets) = ids
-                            |> Array.map(identifyId)
-                            |> Array.fold(updateTypeCount) (0,0)
-        pairs * triplets
-
-    type AlphabetNode =
-    | Node of Map<char, AlphabetNode>
-    | Leaf of int
-    | Empty
-
-    type Result =
-    | KeepGoing of AlphabetNode
-    | FoundOffByOne of int
-
-    let alphabet = ['a';'b';'c';'d';'e';'f';'g';'h';'i';'j';'k';'l';'m';'n';'o';'p';'q';'r';'s';'t';'u';'v';'w';'x';'y';'z']
+    let rec findOneOffIds ids check =
+        match ids with
+        | [] -> ("", "")
+        | firstId::restId ->
+            match check with
+            | [] -> findOneOffIds restId [firstId]
+            | _ ->
+                let result = CheckListForOffByOne firstId check
+                match result with
+                | FoundIdentical s -> (s,s)
+                | FoundOffByOne (a,b) -> (a,b)
+                | DidNotFind -> 
+                    let newChecks = firstId::check
+                    findOneOffIds restId newChecks
 
     let checkAndAddChars str ((a,b) : char*char) =
         match a = b with
@@ -70,106 +57,11 @@ module Day2 =
         a |> Seq.zip(b)
           |> Seq.fold checkAndAddChars ""
 
-    let atEndOfId comparisonNodes i =
-        match comparisonNodes with
-        | [] ->
-            i |> Leaf |> KeepGoing
-        | first::_ ->
-            match first with
-            | Node _ -> i |> Leaf |> KeepGoing
-            | Leaf j -> FoundOffByOne j        
-            | Empty -> i |> Leaf |> KeepGoing
-
-    let getNextCompareNode ch node =
-        match node with
-        | Node m -> 
-            match m.ContainsKey ch with
-            | true -> m.[ch]
-            | false -> Empty
-        | Leaf i -> Empty
-        | Empty -> Empty
-
-    let getNewComparisonNodes ch compareNodes =
-        let mapping = getNextCompareNode ch        
-        compareNodes |> List.map(mapping) |> List.filter(fun n -> 
-            match n with
-            | Node _ -> true
-            | _ -> false
-            )
-
-    let addCurrentNodeComparisons node comparisons =
-        match node with
-        | Node n -> 
-            n
-            |> Map.toList
-            |> List.map(fun (_, v) -> v)
-            |> List.append(comparisons)
-        | _ -> comparisons            
-
-    let rec addIdToTree (id : char list) node (comparisonNodes : AlphabetNode list) i =
-        match id with
-        | [] -> atEndOfId comparisonNodes i
-        | first::rest ->
-            match node with
-            | Node m ->
-                let newComparisons = getNewComparisonNodes first comparisonNodes
-                let newComparisons = addCurrentNodeComparisons node newComparisons                
-                let result = match m |> Map.containsKey(first) with
-                    | true -> addIdToTree rest m.[first] newComparisons i
-                    | false -> addIdToTree rest Empty newComparisons i
-                match result with
-                | KeepGoing n -> m.Add(first, n) |> Node |> KeepGoing
-                | FoundOffByOne j -> result
-            | _ ->
-                let newComparisons = getNewComparisonNodes first comparisonNodes
-                let result = addIdToTree rest Empty newComparisons i
-                match result with
-                | KeepGoing n -> 
-                    let newMap = [for ch in alphabet -> ch, Empty] |> Map.ofSeq
-                    newMap.Add(first, n) |> Node |> KeepGoing
-                | FoundOffByOne _ -> result
-
-    let rec printNode node i =
-        match node with
-        | Node n -> n |> Map.toSeq |> Seq.iter(fun (k, v) -> 
-            match v with
-            | Node _ ->
-                let tabs = String.replicate i "\t"
-                let content = k.ToString()
-                let content = tabs + content
-                printfn "%s" content
-                printNode v (i + 1)
-            | Leaf i ->
-                let tabs = String.replicate i "\t"
-                let content = k.ToString() + " " + i.ToString()
-                let content = tabs + content
-                printfn "%s" content
-            | Empty -> ()
-                )
-        | _ -> ()         
-
-    let rec findOffByOneIds ids node i (origIdList : string[]) =
-        match ids with
-        | [] ->
-            ("", "")
-        | first::rest ->
-            let _ = match i = 2 with
-            | true -> () 
-                //printNode node 0
-            | false -> ()
-            let result = addIdToTree first node [] i
-            let nextIndex = i + 1
-            match result with
-            | KeepGoing n -> findOffByOneIds rest n nextIndex origIdList
-            | FoundOffByOne j -> (origIdList.[i], origIdList.[j])
-
 
     let part2 input =
         let ids = processInput input
-        let charList = ids |> Array.toList |> List.map(fun s -> s |> Seq.toList)
-        let startNode = [for ch in alphabet -> ch, Empty] |> Map.ofSeq |> Node
-        let (id1, id2) = findOffByOneIds charList startNode 0 ids
-        findSharedLetters id1 id2
+        let (a, b) = findOneOffIds ids []
+        findSharedLetters a b
 
     let inputStr = "wxlnjevbfozadyiqpuzkrhstkg
 wxlsjivbfodamyiqpuzcxhstkg
@@ -422,7 +314,5 @@ wxlnjvvbfodamyiopuzcrhstqg
 wxlnjevbsodamyiqpuhcrhstwg
 wxxnjevufodamyiqruzcrhstkg"
 
-    let result1 = part1 inputStr
-    printfn "%i" result1
     let result2 = part2 inputStr
-    printfn "%s" result2
+    printfn "%s" result2    
