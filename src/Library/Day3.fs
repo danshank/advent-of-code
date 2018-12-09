@@ -114,9 +114,9 @@ module Day3 =
         
             
 
-    // let part1 input =
-    //     let claims = input |> processInput |> Seq.map(processClaim)
-    //     findTotalOverlap claims
+    let part1 input =
+        let claims = input |> processInput |> Seq.map(processClaim)
+        findTotalOverlap claims
 
     let part2 input =
         let claims = input |> processInput |> Seq.map(processClaim)
@@ -1524,8 +1524,8 @@ module Day3 =
 #1400 @ 505,321: 27x22
 #1401 @ 432,243: 19x17"
 
-    // let result1 = part1 inputStr
-    // printfn "%i" result1
+    let result1 = part1 inputStr
+    printfn "%i" result1
 
     let result2 = part2 inputStr
     printfn "%A" result2
